@@ -2,6 +2,7 @@ package echoserver
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"sync"
 	"time"
@@ -45,7 +46,7 @@ func InitServer() {
 	)
 
 	// healthCheck endpoint
-	GetServer().GET("/infrastructure/healthcheck", func (c echo.Context) error {
+	GetServer().GET("/infrastructure/healthcheck", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, "OK")
 	})
 
@@ -56,12 +57,15 @@ func InitServer() {
 func StartServer(ctx context.Context) {
 	select {
 	case <-ctx.Done():
-		if err := GetServer().Shutdown(ctx); err != nil {}
+		if err := GetServer().Shutdown(ctx); err != nil {
+		}
 	default:
 		if err := GetServer().StartServer(&http.Server{
-			Addr:         config.GetEchoServerPort(),
-			ReadTimeout:  time.Duration(config.GetEchoServerReadTimeout()) * time.Second,
-			WriteTimeout: time.Duration(config.GetEchoServerWriteTimeout()) * time.Second,
+			Addr:         fmt.Sprintf(":%s", "8080"),
+			//Addr:         fmt.Sprintf(":%s", config.GetEchoServerPort()),
+			ReadTimeout:  time.Duration(config.GetHTTPServerReadTimeout()) * time.Second,
+			WriteTimeout: time.Duration(config.GetHTTPServerWriteTimeout()) * time.Second,
+			IdleTimeout:  time.Duration(config.GetHTTPServerIdleTimeout()) * time.Second,
 		}); err != nil {
 			panic(err)
 		}

@@ -44,14 +44,9 @@ func Handler(err error, c echo.Context) {
 
 	if !c.Response().Committed {
 		if c.Request().Method == "HEAD" {
-			err = c.NoContent(code)
+			c.NoContent(code)
 		} else {
-			err = c.JSON(code, msg)
-		}
-
-		if err != nil {
-			GetServer().Logger.Error(err)
-			return
+			c.JSON(code, msg)
 		}
 
 		logger.Error(

@@ -8,5 +8,6 @@ The following dependencies are used in this files
 | github.com/rianekacahya/config | https://github.com/rianekacahya/config |         |
 | github.com/rianekacahya/logger | https://github.com/rianekacahya/logger |         |
 | go.uber.org/zap                | https://github.com/uber-go/zap         | Other   |
+| github.com/rianekacahya/errors | https://github.com/rianekacahya/errors |         |
 +--------------------------------+----------------------------------------+---------+
 ```
