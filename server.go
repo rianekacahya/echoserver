@@ -43,6 +43,7 @@ func InitServer() {
 		middleware.Recover(),
 		custom_middleware.CORS(),
 		custom_middleware.Headers(),
+		middleware.BodyDump(custom_middleware.Logger),
 	)
 
 	// healthCheck endpoint
@@ -61,8 +62,7 @@ func StartServer(ctx context.Context) {
 		}
 	default:
 		if err := GetServer().StartServer(&http.Server{
-			Addr:         fmt.Sprintf(":%s", "8080"),
-			//Addr:         fmt.Sprintf(":%s", config.GetEchoServerPort()),
+			Addr:         fmt.Sprintf(":%s", config.GetEchoServerPort()),
 			ReadTimeout:  time.Duration(config.GetHTTPServerReadTimeout()) * time.Second,
 			WriteTimeout: time.Duration(config.GetHTTPServerWriteTimeout()) * time.Second,
 			IdleTimeout:  time.Duration(config.GetHTTPServerIdleTimeout()) * time.Second,
